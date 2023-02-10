@@ -84,12 +84,46 @@ function starGame(){
 }
 
 // *************************
+// FUNZIONE "generaBombe"
+// *************************
+
+function generaBombe(posizioneMax){
+
+  // 1. Creo Array in cui salvare la posizione delle Bombe;
+  const posizioniBombe = [];
+
+  // 2. Creo variabile per memorizzare Posizione Random
+  let posizioneRandom;
+
+  // 3. Creo variabile per contare quandi elemento ho inserito nell'Array
+  let count = 0;
+
+  // 4. Creo un ciclo che mi genera 16 posizione random tutte diverse
+  while(count!==16){
+
+    posizioneRandom = Math.floor(Math.random() * (posizioneMax) + 1);
+    if (posizioniBombe.includes(posizioneRandom)=== false){
+      posizioniBombe.push(posizioneRandom);
+      count++;
+    }
+
+  }
+  
+  return posizioniBombe;
+
+}
+
+// *************************
 // FUNZIONE "generaGriglia"
 // *************************
 
 function generaGriglia(lato){
 
+  // 1. Calcolo numero celle con il parametro della funzione
   const numCelle = lato * lato;
+
+  // 2. Invoco la Funzione "generaBombe" passando il "numero celle" come parametro per avere le posizioni delle Bombe
+  const posizioniBombe = generaBombe(numCelle);
 
   // 1. Creo Ciclo di 'numCelle' interazione ed a ogni interazione creo una Cella da inserire dentro 'GrigliaEl'
   for (let i=0; i < numCelle; i++){
@@ -102,8 +136,6 @@ function generaGriglia(lato){
 
     // 1.3 - Aggiungo contenuto (numero della cella) alla Cella
     cellaEl.innerHTML = i + 1;
-
-    
 
     // 2. Aggancio evento "click" sulla cella e invoco Funzione "clickCella"
     cellaEl.addEventListener('click', clickCella);
@@ -120,10 +152,10 @@ function generaGriglia(lato){
 
 function clickCella(){
 
-  const cella = this;
-  console.log(cella.innerHTML);
+  const cellaEl = this;
+  console.log(cellaEl.innerHTML);
 
-  cella.classList.add('bg-vittoria');
+  cellaEl.classList.add('bg-vittoria');
   
   
 }
