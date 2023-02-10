@@ -60,6 +60,9 @@ const playBtnEl = document.querySelector('button');
 // 2. Recupero elemento Griglia da DOM in cui poi inserisco le celle create
 const grigliaEl = document.querySelector('.griglia');
 
+// 3. Recupero elemento Punteggio da DOM in cui inserire punteggio
+const punteggioEl = document.querySelector('.punteggio');
+
 // 3. Aggancio evento "click" al Pulsante Play (recuperato da DOM) invocando la Funzione "starGame"
 playBtnEl.addEventListener('click', starGame);
 
@@ -172,23 +175,25 @@ function generaGriglia(lato){
   punteggio = 0;
   punteggioMax = numCelle - bombe.length;
 
+  punteggioEl.innerHTML = `<h5>Punteggio Attuale: <span style="color:blue">${punteggio}</span></h5>`;
 
-  // 3. Creo Ciclo di 'numCelle' interazione ed a ogni interazione creo una Cella da inserire dentro 'GrigliaEl'
+
+  // 5. Creo Ciclo di 'numCelle' interazione ed a ogni interazione creo una Cella da inserire dentro 'GrigliaEl'
   for (let i=0; i < numCelle; i++){
 
-    // 3.1 - Creo la Cella come Elemento del DOM
+    // 5.1 - Creo la Cella come Elemento del DOM
     const cellaEl = document.createElement('div');
 
-    // 3.2 - Aggiungo Stile CSS in linea per dare dimensione alla Cella
+    // 5.2 - Aggiungo Stile CSS in linea per dare dimensione alla Cella
     cellaEl.style.cssText += `width:calc(100% / ${lato})`;
 
-    // 3.3 - Aggiungo contenuto (numero della cella) alla Cella
+    // 5.3 - Aggiungo contenuto (numero della cella) alla Cella
     cellaEl.innerHTML = posizioni[i];
 
-    // 4. Aggancio evento "click" sulla cella e gestisco il gioco
+    // 6. Aggancio evento "click" sulla cella e gestisco il gioco
     cellaEl.addEventListener('click', clickCella);
 
-    // 5. Inserisco la Cella creata dentro la Griglia nel DOM
+    // 7. Inserisco la Cella creata dentro la Griglia nel DOM
     grigliaEl.append(cellaEl);
     
   }
@@ -203,10 +208,7 @@ function clickCella(){
   // 1. Tramite 'this' recupero la cella a cui e' agganciato l'evento "click"
   const cella = this;
 
-  // 2. Recupero elemento del DOM in cui inserire il punteggio
-  const punteggioEl = document.querySelector('.punteggio');
-
-  // 3. Controllo se il Numero della Cella corrisponde a una Bomba ---> Si = SCONFITTA , No = VITTORIA
+  // 2. Controllo se il Numero della Cella corrisponde a una Bomba ---> Si = SCONFITTA , No = VITTORIA
    if (bombe.includes(parseInt(cella.innerHTML))){
 
     // Cambio colore di sfondo
