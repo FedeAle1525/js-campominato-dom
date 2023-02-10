@@ -84,27 +84,8 @@ function starGame(){
   // 1. Invoco la Funzione "resetGame" per iniziare ogni volta una nuova partita da capo.
   resetGame();
 
-  // 2. Recupero elemento "select" del DOM per impostare la difficolta', cioe' il lato della griglia
-  const difficoltaEl = document.getElementById('select-difficolta');
-  difficoltaEl.classList.add('d-none');
-
-  // 3. Controllo valore della "select" per impostare difficolta
-
-  if(difficoltaEl.value === ''){
-    endGameError();
-  }
-
-  if (difficoltaEl.value === 'facile'){
-    latoGriglia = 7;
-  }
-
-  if (difficoltaEl.value === 'medio'){
-    latoGriglia = 9;
-  }
-
-  if (difficoltaEl.value === 'difficile'){
-    latoGriglia = 10;
-  }
+  // 2. Imposto valore lato griglia
+  latoGriglia = 10;
   
   // 4. Invoco la Funzione "generaGriglia" passando la dimensione del lato [Gliglia Quadrata]  
   generaGriglia(latoGriglia);
