@@ -123,24 +123,56 @@ function generaGriglia(lato){
   const numCelle = lato * lato;
 
   // 2. Invoco la Funzione "generaBombe" passando il "numero celle" come parametro per avere le posizioni delle Bombe
-  const posizioniBombe = generaBombe(numCelle);
+  const bombe = generaBombe(numCelle);
+  console.log(bombe);
 
-  // 1. Creo Ciclo di 'numCelle' interazione ed a ogni interazione creo una Cella da inserire dentro 'GrigliaEl'
+  // 3. Creo variabile che tiene conto del Punteggio
+  let punteggio = 0;
+
+
+  // 3. Creo Ciclo di 'numCelle' interazione ed a ogni interazione creo una Cella da inserire dentro 'GrigliaEl'
   for (let i=0; i < numCelle; i++){
 
-    // 1.1 - Creo la Cella come Elemento del DOM
+    // 3.1 - Creo la Cella come Elemento del DOM
     const cellaEl = document.createElement('div');
 
-    // 1.2 - Aggiungo Stile CSS in linea per dare dimensione alla Cella
+    // 3.2 - Aggiungo Stile CSS in linea per dare dimensione alla Cella
     cellaEl.style.cssText += `width:calc(100% / ${lato})`;
 
-    // 1.3 - Aggiungo contenuto (numero della cella) alla Cella
+    // 3.3 - Aggiungo contenuto (numero della cella) alla Cella
     cellaEl.innerHTML = i + 1;
 
-    // 2. Aggancio evento "click" sulla cella e invoco Funzione "clickCella"
-    cellaEl.addEventListener('click', clickCella);
+    // 4. Aggancio evento "click" sulla cella e gestisco il gioco
+    cellaEl.addEventListener('click', function(){
 
-    // 3. Inserisco la Cella creata dentro la Griglia nel DOM
+      const cella = this;
+
+      // 4.1 Controllo se il Numero della Cella corrisponde a una Bomba ---> Si = SCONFITTA , No = VITTORIA
+      if (bombe.includes(parseInt(cella.innerHTML))){
+
+        // Cambio colore di sfondo
+        cella.classList.add('bg-sconfitta');
+
+        // Inserisco icona "bomba"
+        cella.innerHTML = `<i class="fa-solid fa-bomb"></i>`;
+
+
+      } else {
+
+        // Cambio colore di sfondo
+        cella.classList.add('bg-vittoria');
+
+        // Inserisco icona "ok"
+        cella.innerHTML = `<i class="fa-solid fa-thumbs-up"></i>`;
+
+        // Incremento punteggio
+        punteggio++;
+        console.log(punteggio);
+      }
+
+    });
+
+    // 5. Inserisco la Cella creata dentro la Griglia nel DOM
     grigliaEl.append(cellaEl);
     
   }
@@ -150,12 +182,13 @@ function generaGriglia(lato){
 // FUNZIONE "clickCella"
 // *************************
 
-function clickCella(){
+// function clickCella(){
 
-  const cellaEl = this;
-  console.log(cellaEl.innerHTML);
+//   const cellaEl = this;
 
-  cellaEl.classList.add('bg-vittoria');
+//   console.log(cellaEl.innerHTML);
+//   console.log(bombe);
+
+//   cellaEl.classList.add('bg-vittoria');
   
-  
-}
+// }
